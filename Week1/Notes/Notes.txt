@@ -1,0 +1,41 @@
+Karatsuba Multiplication
+
+Ex: Multiply 1234 * 5678
+Sequence looks different than grade school multiplication
+
+x = 1234
+y = 5678
+
+a = 56, b = 78, c = 12, d = 34
+do a few operations between those 2 digit numbers and collect.
+
+1) compute a * c
+2) compute b * d
+3) compute (a +b)(c +d)
+4) compute Step 3 - 2 - 1
+5) pad a * c with 4 0's, b * d with none, Step 4 with 0, add them up
+
+x * y = 10^n(ac) + 10^(n/2)(ad + bc) + bc
+
+only care about 3 quantities, so only want 3 recursive calls
+
+1) compute ac
+2) compute bd
+3) recursively compute (a+b)(c+d) = ac+ad+bc+bd
+Gauss' Trick: 3 - 1 - 2 = ad + bc
+upshot: only need 3 recursive calls and some additions
+
+
+Merge Sort
+
+Good intro to divide and conquer
+  improves over selection, insertion, and bubble sorts (O(n)^2)
+
+Sorting problem:
+Input: array of n numbers, unsorted
+Output: array sorted in increasing order
+>>>5,4,1,3,2,7,9
+>>>1,2,3,4,5,7,9
+
+Merge Sort - recursive, calls itself on smaller arrays than the input
+Split array into 2, sort each, combine them (merge)
