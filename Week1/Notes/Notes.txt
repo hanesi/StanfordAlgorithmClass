@@ -39,3 +39,110 @@ Output: array sorted in increasing order
 
 Merge Sort - recursive, calls itself on smaller arrays than the input
 Split array into 2, sort each, combine them (merge)
+
+Pseudocode
+
+recursive calls and merge
+
+c = output array (length n)
+a = first sorted array
+b = second sorted array
+i, j = counters to traverse a and b (set to 1)
+
+Minimum element must be first
+for k = 1 to n
+  if a(i) < b(j)
+    c(k) = a(i)
+    i++
+  elif b(j) < a(i)
+    c(k) = b(j)
+    j++
+
+Running Time?
+Key question - running merge sort on n numbers?
+  runtime ~ num lines of code executed
+
+2 operations to set i,j = 1
+for loop runs n times, 4 operations each time
+  +1 to k,j, or i plus setting the output array
+
+4m + 2 can call it at least 6m because m>=1
+
+Claim - never need more that 6nLog(n) + 6n operations
+
+Runtime analysis - substantiate above claim
+
+recursion tree proof
+    root 0  #outer call
+        / \
+       0   0 #level 1
+      / \ / \
+     0  0 0  0 #level 2
+
+There are Log(n) levels; decreases by a factor of 2 each level
+Allows us to add up code level by level
+
+at level j, how many sub problems? 2^j (merge sort doubles each time)
+for each one, what's the input size? n/j^2
+
+Guiding Principles of Algorithms
+
+Worst-case analysis: use upper bound (6n) for all cases
+  (as opposed to average case or benchmarks; req's domain knowledge)
+  Usually easier to analyze
+Won't worry about lower order terms or constant factors
+  justifications - easier, constants depend on architecture, lose very little
+Asymptotic analysis: focus on running for LARGE input steps
+  justifications - only big problems are interesting
+    dont need algorithms for small datasets
+
+What is fast?
+  worst case scenario runtime grows slowly with input size
+    (want linear runtime)
+
+
+Asymptotic Analysis - The Gist
+
+Importance - vocab for design and analysis of algo's
+Sweet spot for high level reasoning
+  coarse enough to suppress language/compiler-dependent details
+  sharp enough for useful comparisons betweens algorithms
+    (better/worse sort approaches, for example)
+
+High level idea - suppress leading constant factors and lower order terms
+  lower order terms become irrelevant with large inputs
+  constant factors are too dependent on architecture
+
+  ex 6nlog(n) + 6n -> nLog(n) (Big Oh Notation)
+
+Big Oh Notation
+let T(n) = function on n = 1,2,3,4, usually worst case scenario
+
+
+Divide and conquer
+Input: array containing numbers 1 to n
+Output: number of inversions, i.e. pairs (i,j) of array indicies with
+  i < j and a[i] > a[j]
+
+ex: [1,3,5,2,4,6]
+inversions: [5,2], [3,2], [5,4]
+motivation - numerical similarity measure between 2 ranked lists
+  e.g. collaborative filtering
+
+Brute force method - double for loop O(n^2) in time
+  can we do better? Yes, divide and conquer
+
+call inversion [i,j] with i < j
+left if i,j <= n/2
+right if i,j > n/2
+split if i <= n/2 < j <- need separate process
+
+Count(array A, length n)
+  if n =1 retrun 0
+  else
+    x = count(1st half of A, n/2)
+    y = count(2nd half of A, n/2)
+    z = count SplitInv(A,n) <- not currently implemented
+  return x + y + z
+
+goal: implement linear CountSplitInv
