@@ -146,3 +146,64 @@ Count(array A, length n)
   return x + y + z
 
 goal: implement linear CountSplitInv
+
+Piggyback on merge sort
+key idea - have recursive call count inversions and sort
+
+merge subroutine naturally uncovers inversions
+
+SortAndCount(array A, length n)
+  if n =1 retrun 0
+  else
+    x = SortAndcount(1st half of A, n/2)
+    y = SortAndcount(2nd half of A, n/2)
+    z = MergeAndCountSplitInv(A,n) <- not currently implemented
+  return x + y + z
+
+if you have an array with no split inversions, the left list
+  is smaller than everything on the right
+
+Example:
+consider merging [1,2,3] and [2,4,6]
+output = [1,2,3,4,5,6]
+when 2 copied to output, discover split inversions [3,2] amd [5,4]
+copied 4, find inversion [5,2]
+
+if x copied first, then x < y, no inversion.
+if y copied, x > y, signifying a split inversion
+
+while merging, keep running total of split inversions (where  x > y)
+
+
+Matrix Multiplications
+
+3 matrices, x * y = z
+all n x n
+where Zij = ith row of x * jth row of y
+Input size = n^2
+
+Ex: n = 2
+a b   e f    ae+bg af+bh
+    x     =
+c d   g h    ce+dg cf+dh
+
+have to identify multiplications of smaller matrices
+
+idea: divide matrix into quadrants
+recursively compute products (8 of them)
+do the additions (O(n^2))
+runtime is cubic though, follows master method
+
+Strassen's algo
+step 1 compute only 7 cleverly chosen products
+step 2 do the necessary subtractions/additions
+better than cubic time!
+
+
+Closest Pair Problem
+
+input: set P of n points in the plane
+want SQRT of the square of the differences of the points
+
+assume: have distinct coordinates
+brute force takes On^2
