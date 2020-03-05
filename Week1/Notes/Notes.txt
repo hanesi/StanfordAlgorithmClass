@@ -207,3 +207,32 @@ want SQRT of the square of the differences of the points
 
 assume: have distinct coordinates
 brute force takes On^2
+
+1D version, all points are on one line, do a merge sort
+return closest pair (smallest difference) O(n) time
+goal O(nlogn) time for 2D version
+
+1) make copies of points sorted by X and by Y (Px, Py) (nlogn time)
+  (sorting is a free primitive)
+2) use divide and conquer
+
+Let Q = left half, R = right half
+form Qx, Qy, Rx, Ry (takes On time)
+p1,q1 = closest pair (Qx, Qy)
+p2,q2 = closest pair (Rx, Ry)
+p3,q3 = closest split pair (Px, Py)
+return best of the above
+
+Key idea - only need to bother computing closest split pair
+  in unlucky case where distance is less than both p1,q1 and p2,q2
+
+check delta between first and second recursive calls
+only care about points that are within delta [x-d, y-d]
+
+Sy = points of P with X coord in the delta region (+/- d)
+best = delta, best_pair = null
+for i = 1 to Sy - 7
+  for j = 1 to 7
+    let Piz = ith, (i +j)th points of Sy
+    if d(p1,q1) < best
+      best_pair = (p1,q1), dist = d(p1,q1)
